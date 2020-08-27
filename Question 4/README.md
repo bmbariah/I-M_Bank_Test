@@ -4,17 +4,18 @@
 
 ## About
 
-This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
+This solution uses 
+1. [NodeJS](http://feathersjs.com)
+2. [Express Framework](http://feathersjs.com)
+3. [NEDB](https://github.com/louischatriot/nedb)
 
-## Getting Started
-
-Getting up and running is as easy as 1, 2, 3.
+## Running solution
 
 1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
 2. Install your dependencies
 
     ```
-    cd path/to/iou-tracker
+    cd path/to/Question 4
     npm install
     ```
 
@@ -23,23 +24,8 @@ Getting up and running is as easy as 1, 2, 3.
     ```
     npm start
     ```
+4. Go to url on browser
 
-## Testing
-
-Simply run `npm test` and all your tests in the `test/` directory will be run.
-
-## Scaffolding
-
-Feathers has a powerful command line interface. Here are a few things it can do:
-
-```
-$ npm install -g @feathersjs/cli          # Install Feathers CLI
-
-$ feathers generate service               # Generate a new Service
-$ feathers generate hook                  # Generate a new Hook
-$ feathers help                           # Show all commands
-```
-
-## Help
-
-For more information on all the things you can do with Feathers visit [docs.feathersjs.com](http://docs.feathersjs.com).
+    ```
+    localhost:3030
+    ```

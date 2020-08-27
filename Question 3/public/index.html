@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>A FeathersJS application</title>
+  <meta name="description" content="A FeathersJS server">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  
+  <!-- Custom styles for this template -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+      font-weight: 400;
+      font-size: 16px;
+      color: #2c3e50;
+    }
+
+    .center-text {
+      text-align: center;
+    }
+
+    main {
+      margin-top: 100px;
+      padding: 20px;
+    }
+
+    img.logo {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 2em;
+      font-weight: 100;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+    }
+
+    footer p {
+      font-weight: 300;
+      font-size: 1.0em;
+    }
+
+    a {
+      color: #3cf;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:focus {
+      color: #3cf;
+    }
+  </style>
+</head>
+
+<body>
+
+    <div class="d-flex" id="wrapper">
+    
+      <!-- Sidebar -->
+      <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Game of Thrones API</div>
+        <div class="list-group list-group-flush">
+          <a href="#one" class="list-group-item list-group-item-action bg-light">Books</a>
+          <a href="#two" class="list-group-item list-group-item-action bg-light">Houses</a>
+          <a href="#three" class="list-group-item list-group-item-action bg-light">Characters</a>
+        </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+    
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <div id="one" class="menu-content container-fluid">
+          <h1 class="mt-4">Books</h1>
+          <table id="books" class="display" style="width:80%">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>ISBN</th>
+                    <th>Number Of Pages</th>
+                    <th>Author</th>
+                    <th>Publisher</th>
+                    <th>Country</th>
+                    <th>MediaType</th>
+                    <th>Released</th>
+                  </tr>
+                </thead>
+              </table> 
+        </div>
+
+        <div id="two" class="menu-content container-fluid">
+          <h1 class="mt-4">Houses</h1>
+          <table id="houses" class="display" style="width:80%">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Region</th>
+                    <th>Coat Of Arms</th>
+                    <th>Words</th>
+                   <!--  <th>Founder</th>
+                    <th>Founded</th>
+                    <th>Current Lord</th>
+                    <th>Heir</th> -->
+                  </tr>
+                </thead>
+              </table>
+        </div>
+
+
+      <div id="three" class="menu-content container-fluid">
+        <h1 class="mt-4">Houses</h1>
+        <table id="characters" class="display" style="width:80%">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Culture</th>
+              <th>Aliases</th>
+              <th>PlayedBy</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      </div>
+      <!-- /#page-content-wrapper -->
+    
+    </div>
+
+
+    <footer>
+      <p class="center-text">Built by Mbariah.</p>
+    </footer>
+</body>
+
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
+<script>
+    var $content = $('.menu-content');
+
+    function showContent(selector) {
+      $content.hide();
+      $(selector).show();
+      if(selector == '#one'){
+        loadBooks()
+      }else if(selector == '#two') {
+        loadHouses()
+      }else{
+        loadCharacters()
+      }
+    }
+
+    $('.list-group').on('click', '.list-group-item', function (e) {
+      showContent(e.currentTarget.hash);
+      e.preventDefault();
+    });
+
+    showContent('#one');
+
+    function loadBooks() {
+
+      $('#books').DataTable({
+        processing: true,
+        //serverSide: true,
+        retrieve: true,
+        searching: false,
+        paging: false,
+        info: false,
+        ajax: {
+          url: 'http://localhost:3030/api/books',
+          dataSrc: "",
+        },
+        searching: false,
+        dataType: 'json',
+        type: "GET",
+        columns: [
+          { "data": "name" },
+          { "data": "isbn" },
+          { "data": "numberOfPages" },
+          { "data": "authors" },
+          { "data": "publisher" },
+          { "data": "country" },
+          { "data": "mediaType" },
+          { "data": "released" },
+        ]
+      });
+    }
+    
+    function loadHouses() {
+
+     $('#houses').DataTable({
+      retrieve: true,
+      processing: true,
+      //serverSide: true,
+      searching: false,
+      paging: false,
+      info: false,
+      ajax: {
+        url: 'http://localhost:3030/api/houses',
+        dataSrc: "",
+      },
+      searching: false,
+      dataType: 'json',
+      type: "GET",
+      columns: [
+        { "data": "name" },
+        { "data": "region" },
+        { "data": "coatOfArms" },
+        { "data": "words" },
+        /* { "data": "founder" },
+        { "data": "founded" },
+        { "data": "currentLord" },
+        { "data": "heir" }, */
+      ]
+    });
+
+  }
+
+    function loadCharacters() {
+     /*  var table = $('#characters').DataTable();
+      
+      var info = table.page.info();
+      console.log(info.page);
+       */
+      //var pageNo  = 1;
+
+      var table = $('#characters').DataTable({
+        bServerSide: true,
+        retrieve: true,
+        processing: true,
+        searching: false,
+        paging: true,
+        info: false,
+        ajax: {
+          dataSrc: "",
+          data: function () {
+            var info = $('#characters').DataTable().page.info();
+            $('#characters').DataTable().ajax.url("http://localhost:3030/api/characters?page=" + (info.page + 1));
+          }
+        },
+        searching: false,
+        dataType: 'json',
+        type: "GET",
+        columns: [
+          { "data": "name", 
+            "render": function (data, type, row, meta) {
+              return data.length < 1 ? 'N/A': data;
+            }
+          },
+          { "data": "gender" , "render": function (data, type, row, meta) {
+              return data.length < 1 ? 'N/A' : data;
+            } },
+          { "data": "culture", "render": function (data, type, row, meta) {
+              return data.length < 1 ? 'N/A' : data;
+            } },
+          { "data": "aliases", "render": function (data, type, row, meta) {
+              return data[0].length < 1 ? 'N/A' : data;
+            } },
+            {
+            "data": "playedBy", "render": function (data, type, row, meta) {
+              return data[0].length < 1 ? 'N/A' : data;
+            }
+          },
+            
+          /* { "data": "founder" },
+          { "data": "founded" },
+          { "data": "currentLord" },
+          { "data": "heir" }, */
+        ]//,
+        
+      });
+
+     /*  var info = table.page.info();
+      console.log(info.page);
+      current_page = info.page; */
+
+    }
+
+</script>
+
+</html>

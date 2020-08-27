@@ -1,20 +1,38 @@
-function score(x,y) {
+/* 
+    Knapsack Problem
 
-    //Use pythagoras theorem to find distance between points
-    let points = 0;
-    let radius_squared = Math.pow((x - 0), 2) + Math.pow((y - 0), 2);
-    let radius = Math.sqrt(radius_squared);
+    Brute Force Method
+    Time Complexity of O(2^n)
+*/
 
-    if (radius > 10){
-        points = 0;
-    } else if (radius > 5) {
-        points = 1;
-    } else if (radius > 1) {
-        points = 5;
-    } else {
-        points = 10;
+
+function knapsackSolution(values, weights, limit, i) {
+
+    if (limit === 0 || i === 0) {
+        return 0;
     }
-   
-
-    return points;
+    if (weights[i] > limit){
+        return knapsackSolution(values, weights, limit, i - 1);
+    }
+    else {
+        let include = values[i] + knapsackSolution(values, weights, limit - weights[i], i - 1);
+        let exclude = knapsackSolution(values, weights, limit, i - 1);
+        return Math.max(include, exclude);
+    }
+        
 }
+
+// [{ "weight": 5, "value": 10 }, { "weight": 4, "value": 40 }, { "weight": 6, "value": 30 }, { "weight": 4, "value": 50 }]
+
+let itemWeights = [null, 5, 4, 6, 4],
+    itemValues = [null, 10, 40, 30, 50],
+    knapsackLimit = 10,
+    No_Of_Items = 4;
+
+let maxLoot = knapsackSolution(itemValues,
+    itemWeights,
+    knapsackLimit,
+    No_Of_Items);
+
+console.log('Maximum Loot is : ', maxLoot);
+//Maximum Loot is :  90

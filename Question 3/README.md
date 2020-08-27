@@ -31,4 +31,4 @@ This solution uses
     localhost:3030
     ```
 
-[Image](https://bitbucket.org/bmbariah/i-m_bank_test/src/master/Question%203/images/Capture.PNG)
+    ![Image](images/Capture.PNG)

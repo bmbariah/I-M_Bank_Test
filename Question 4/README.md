@@ -31,4 +31,4 @@ This solution uses
     ```
 
 
-    [Image](https://bitbucket.org/bmbariah/i-m_bank_test/src/master/Question%204/images/CaptureIOU.PNG)
+    ![Image](images/CaptureIOU.PNG)
